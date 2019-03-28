@@ -13,6 +13,9 @@ class CoffeeCart extends Component {
     this.props.checkoutCart();
   };
   render() {
+    if (!this.props.user) {
+      this.props.navigation.navigate("Login");
+    }
     let items = this.props.items;
     let cartItems;
     if (items) {
@@ -37,7 +40,8 @@ class CoffeeCart extends Component {
 }
 
 const mapStateToProps = state => ({
-  items: state.cartReducer.items
+  items: state.cartReducer.items,
+  user: state.authReducer.user
 });
 
 const mapDispatchToProps = dispatch => ({

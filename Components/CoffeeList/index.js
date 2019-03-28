@@ -9,6 +9,7 @@ import coffeeshops from "./list";
 // Component
 import CoffeeItem from "./CoffeeItem";
 import CartButton from "../CartButton";
+import LogoutButton from "../LogoutButton";
 
 class CoffeeList extends Component {
   static navigationOptions = {
@@ -30,6 +31,7 @@ class CoffeeList extends Component {
     return (
       <Content>
         <List>{shops}</List>
+        <LogoutButton />
       </Content>
     );
   }

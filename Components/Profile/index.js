@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { Text, View } from "native-base";
+import { connect } from "react-redux";
 
-export default class index extends Component {
+class Profile extends Component {
   render() {
+    if (!this.props.user) {
+      this.props.navigation.replace("Login");
+    }
     return (
       <View>
         <Text>PROFILE PAGE</Text>
@@ -10,3 +14,9 @@ export default class index extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  user: state.authReducer.user
+});
+
+export default connect(mapStateToProps)(Profile);

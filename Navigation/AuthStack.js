@@ -7,7 +7,8 @@ import List from "../Components/CoffeeList";
 const AuthStack = createStackNavigator(
   {
     Login: Login,
-    Profile: Profile
+    Profile: Profile,
+    CoffeeList: List
   },
   {
     initialRouteName: "Login",

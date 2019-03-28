@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions/authActions";
 // NativeBase Components
 import {
   Text,
@@ -16,7 +17,19 @@ import {
 } from "native-base";
 
 class Login extends Component {
+  componentDidMount = () => {
+    this.props.checkForToken();
+  };
+
+  state = {
+    username: "",
+    password: ""
+  };
+
   render() {
+    if (this.props.user) {
+      this.props.navigation.navigate("Profile");
+    }
     return (
       <Content>
         <Header transparent />
@@ -35,7 +48,12 @@ class Login extends Component {
                     marginBottom: 10
                   }}
                 >
-                  <Input autoCorrect={false} autoCapitalize="none" />
+                  <Input
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    onChangeText={username => this.setState({ username })}
+                    value={this.state.username}
+                  />
                 </Item>
                 <Body>
                   <Label style={{ color: "white" }}>Password</Label>
@@ -48,6 +66,7 @@ class Login extends Component {
                     autoCorrect={false}
                     secureTextEntry
                     autoCapitalize="none"
+                    onChangeText={password => this.setState({ password })}
                   />
                 </Item>
               </Form>
@@ -56,14 +75,14 @@ class Login extends Component {
           <Button
             full
             success
-            onPress={() => this.props.navigation.navigate("Profile")}
+            onPress={() => this.props.login(this.state, this.props.navigation)}
           >
             <Text>Login</Text>
           </Button>
           <Button
             full
             warning
-            onPress={() => this.props.navigation.navigate("CoffeeList")}
+            onPress={() => this.props.signup(this.state, this.props.navigation)}
           >
             <Text>Register</Text>
           </Button>
@@ -75,5 +94,19 @@ class Login extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  user: state.authReducer.user
+});
+const mapDispatchToProps = dispatch => ({
+  login: (userData, navigation) =>
+    dispatch(actionCreators.login(userData, navigation)),
+  signup: (userData, navigation) =>
+    dispatch(actionCreators.signup(userData, navigation)),
+  checkForToken: navigation =>
+    dispatch(actionCreators.checkForExpiredToken(navigation))
+});
 
-export default Login;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);
