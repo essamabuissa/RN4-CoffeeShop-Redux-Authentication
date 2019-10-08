@@ -1,5 +1,4 @@
-import { createStackNavigator, createAppContainer } from "react-navigation";
-
+import { createStackNavigator } from "react-navigation-stack";
 import Cart from "../Components/CoffeeCart";
 import OrderHistory from "../Components/OrderHistory";
 

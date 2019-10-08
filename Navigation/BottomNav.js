@@ -1,4 +1,4 @@
-import { createBottomTabNavigator } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation-tabs";
 import React from "react";
 import { Icon } from "native-base";
 import AuthStack from "./AuthStack";
