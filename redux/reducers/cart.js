@@ -2,25 +2,26 @@ import { ADD_ITEM, REMOVE_ITEM, CHECKOUT } from "../actions/types";
 
 const initialState = [];
 
-export default (state = initialState, { type, payload }) => {
+export default (items = initialState, { type, payload }) => {
   switch (type) {
     case ADD_ITEM:
       const newItem = payload;
-      const foundItem = state.find(
+      const foundItem = items.find(
         item => item.drink === newItem.drink && item.option === newItem.option
       );
       if (foundItem) {
-        foundItem.quantity += newItem.quantity;
-        return [...state];
-      } else return [...state, { ...newItem }];
+        return items.map(item =>
+          item === foundItem ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else return [...items, { ...newItem, quantity: 1 }];
 
     case REMOVE_ITEM:
-      return state.filter(item => item !== payload);
+      return items.filter(item => item !== payload);
 
     case CHECKOUT:
       return [];
 
     default:
-      return state;
+      return items;
   }
 };
