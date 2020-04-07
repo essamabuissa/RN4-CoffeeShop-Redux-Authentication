@@ -6,16 +6,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CartIcon from "./CartIcon";
 
 // Screens
-import { SHOP, CART, USER } from "./screenNames";
-import UserStack from "./UserStack";
-import CartStack from "./CartStack";
+import { SHOP, CART, USER, LOGIN, SIGNUP } from "./screenNames";
+import UserStack from "./StackNavigators/UserStack";
+import CartStack from "./StackNavigators/CartStack";
+import ShopStack from "./StackNavigators/ShopStack";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export default function RootTabNavigator() {
   return (
     <Navigator
-      initialRouteName={CART}
+      initialRouteName={SHOP}
       tabBarOptions={{
         showLabel: false,
         activeTintColor: "white",
@@ -24,28 +25,34 @@ export default function RootTabNavigator() {
           backgroundColor: "rgb(20,90,100)"
         }
       }}
-    >
-      <Screen
-        name={USER}
-        component={UserStack}
-        options={{
-          tabBarIcon: ({ color }) => (
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color }) => {
+          let iconName = "";
+          switch (route.name) {
+            case USER:
+              iconName = "account";
+              break;
+
+            case SHOP:
+              iconName = "coffee";
+              break;
+
+            default:
+              return <CartIcon color={color} />;
+          }
+          return (
             <Icon
-              name="account"
+              name={iconName}
               type="MaterialCommunityIcons"
               style={{ color }}
             />
-          )
-        }}
-      />
-      <Screen
-        name={CART}
-        component={CartStack}
-        options={{
-          tabBarIcon: ({ color }) => <CartIcon color={color} />,
-          title: "Cart"
-        }}
-      />
+          );
+        }
+      })}
+    >
+      <Screen name={USER} component={UserStack} />
+      <Screen name={SHOP} component={ShopStack} />
+      <Screen name={CART} component={CartStack} />
     </Navigator>
   );
 }

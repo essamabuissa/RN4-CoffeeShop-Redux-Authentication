@@ -2,11 +2,11 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens
-import { CART } from "./screenNames";
-import CoffeeCart from "../Components/CoffeeCart";
+import { CART } from "../screenNames";
+import CoffeeCart from "../../Components/CoffeeCart";
 
 // Config
-import screenOptions from "./screenOptions";
+import screenOptions from "../screenOptions";
 
 const { Navigator, Screen } = createStackNavigator();
 

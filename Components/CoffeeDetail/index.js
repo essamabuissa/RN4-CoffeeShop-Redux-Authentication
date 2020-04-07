@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actionCreators from "../../store/actions/cartActions";
-
-// NativeBase Components
 import {
   Thumbnail,
   Text,
@@ -15,11 +11,12 @@ import {
   Picker,
   Content
 } from "native-base";
+import { connect } from "react-redux";
+
+import { addItemToCart } from "../../redux/actions";
 
 // Style
 import styles from "./styles";
-
-//List
 
 class CoffeeDetail extends Component {
   state = {
@@ -27,30 +24,8 @@ class CoffeeDetail extends Component {
     option: "Small"
   };
 
-  changeDrink = value => {
-    this.setState({
-      drink: value
-    });
-  };
-
-  changeOption = value => {
-    this.setState({
-      option: value
-    });
-  };
-
-  handlePress = () => {
-    const newItem = {
-      ...this.state,
-      quantity: 1
-    };
-    this.props.addItemToCart(newItem);
-  };
-
   render() {
-    const { coffeeShops, loading } = this.props.coffeeReducer;
-    if (loading) return <Content />;
-    const coffeeshop = this.props.navigation.getParam("coffeeShop");
+    const { coffeeshop } = this.props.route.params;
     return (
       <Content>
         <List>
@@ -73,7 +48,7 @@ class CoffeeDetail extends Component {
                 mode="dropdown"
                 style={{ width: 150 }}
                 selectedValue={this.state.drink}
-                onValueChange={this.changeDrink}
+                onValueChange={drink => this.setState({ drink })}
               >
                 <Picker.Item label="Cappuccino" value="Cappuccino" />
                 <Picker.Item label="Latte" value="Latte" />
@@ -86,7 +61,7 @@ class CoffeeDetail extends Component {
                 mode="dropdown"
                 style={{ width: 150 }}
                 selectedValue={this.state.option}
-                onValueChange={this.changeOption}
+                onValueChange={option => this.setState({ option })}
               >
                 <Picker.Item label="Small" value="Small" />
                 <Picker.Item label="Medium" value="Medium" />
@@ -94,7 +69,11 @@ class CoffeeDetail extends Component {
               </Picker>
             </Body>
           </ListItem>
-          <Button full danger onPress={this.handlePress}>
+          <Button
+            full
+            danger
+            onPress={() => this.props.addItemToCart(this.state)}
+          >
             <Text>Add</Text>
           </Button>
         </List>
@@ -103,12 +82,8 @@ class CoffeeDetail extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  coffeeReducer: state.coffeeReducer
-});
-
 const mapDispatchToProps = dispatch => ({
-  addItemToCart: item => dispatch(actionCreators.addItemToCart(item))
+  addItemToCart: item => dispatch(addItemToCart(item))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CoffeeDetail);
+export default connect(null, mapDispatchToProps)(CoffeeDetail);

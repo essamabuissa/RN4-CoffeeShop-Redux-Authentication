@@ -1,38 +1,28 @@
-import React, { Component } from "react";
+import React from "react";
+import { List, Content } from "native-base";
 import { connect } from "react-redux";
-// NativeBase Components
-import { List, Content, Spinner } from "native-base";
-
-// Store
-import coffeeshops from "./list";
 
 // Component
 import CoffeeItem from "./CoffeeItem";
-import LogoutButton from "../LogoutButton";
 
-class CoffeeList extends Component {
-  render() {
-    const { coffeeShops, loading } = this.props.coffeeReducer;
-    let shops;
+const CoffeeList = ({ coffeeshops, navigation }) => {
+  const shopList = coffeeshops.map(coffeeshop => (
+    <CoffeeItem
+      coffeeshop={coffeeshop}
+      key={coffeeshop.name}
+      navigation={navigation}
+    />
+  ));
 
-    if (loading) {
-      return <Spinner />;
-    }
-    shops = coffeeShops.map(coffeeShop => (
-      <CoffeeItem coffeeShop={coffeeShop} key={coffeeShop.id} />
-    ));
+  return (
+    <Content>
+      <List>{shopList}</List>
+    </Content>
+  );
+};
 
-    return (
-      <Content>
-        <List>{shops}</List>
-        <LogoutButton />
-      </Content>
-    );
-  }
-}
-
-const mapStateToProps = state => ({
-  coffeeReducer: state.coffeeReducer
+const mapStateToProps = ({ coffeeshops }) => ({
+  coffeeshops
 });
 
 export default connect(mapStateToProps)(CoffeeList);
