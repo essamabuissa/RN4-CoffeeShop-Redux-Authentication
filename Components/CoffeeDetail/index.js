@@ -20,16 +20,8 @@ import {
 import styles from "./styles";
 
 //List
-import coffeeshops from "../CoffeeList/list";
-import CartButton from "../CartButton";
 
 class CoffeeDetail extends Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: navigation.getParam("coffeeShop").name,
-      headerRight: <CartButton />
-    };
-  };
   state = {
     drink: "Cappuccino",
     option: "Small"
@@ -119,7 +111,4 @@ const mapDispatchToProps = dispatch => ({
   addItemToCart: item => dispatch(actionCreators.addItemToCart(item))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CoffeeDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(CoffeeDetail);

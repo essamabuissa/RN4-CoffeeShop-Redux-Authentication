@@ -6,16 +6,16 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
     case ADD_ITEM:
       const newItem = payload;
-      const foundItem = state.items.find(
+      const foundItem = state.find(
         item => item.drink === newItem.drink && item.option === newItem.option
       );
       if (foundItem) {
-        foundItem.quantity++;
+        foundItem.quantity += newItem.quantity;
         return [...state];
-      } else return [...state, newItem];
+      } else return [...state, { ...newItem }];
 
     case REMOVE_ITEM:
-      return state.items.filter(item => item !== payload);
+      return state.filter(item => item !== payload);
 
     case CHECKOUT:
       return [];

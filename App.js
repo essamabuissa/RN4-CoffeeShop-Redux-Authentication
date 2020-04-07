@@ -1,10 +1,14 @@
 import React, { Component } from "react";
+import { loadAsync } from "expo-font";
 import { Spinner } from "native-base";
-import HomePage from "./Components/HomePage";
-import { Provider } from "react-redux";
 
-// Store
-import store from "./store";
+// Navigation
+import RootNavigator from "./Navigation";
+import { NavigationContainer } from "@react-navigation/native";
+
+// Redux
+import { Provider } from "react-redux";
+import store from "./redux";
 
 class App extends Component {
   state = {
@@ -12,7 +16,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    await Expo.Font.loadAsync({
+    await loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
@@ -25,7 +29,9 @@ class App extends Component {
     }
     return (
       <Provider store={store}>
-        <HomePage />
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
       </Provider>
     );
   }

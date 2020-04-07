@@ -1,33 +1,33 @@
-import React, { Component } from "react";
-
-// NativeBase Components
+import React from "react";
 import { Text, Left, Body, Right, Button, ListItem, Icon } from "native-base";
+import { connect } from "react-redux";
 
-class CartItem extends Component {
-  handlePress = () => {
-    this.props.removeItemFromCart(this.props.item);
-  };
-  render() {
-    const { item } = this.props;
-    return (
-      <ListItem style={{ borderBottomWidth: 0 }}>
-        <Left>
-          <Text style={{ color: "white", marginLeft: 16 }}> {item.drink} </Text>
-          <Text note style={{ marginLeft: 16 }}>
-            {item.option}
-          </Text>
-        </Left>
-        <Body>
-          <Text style={{ color: "white" }}>{item.quantity}</Text>
-        </Body>
-        <Right>
-          <Button transparent onPress={this.handlePress}>
-            <Icon name="trash" style={{ color: "white", fontSize: 21 }} />
-          </Button>
-        </Right>
-      </ListItem>
-    );
-  }
-}
+import { removeItemFromCart } from "../../redux/actions";
 
-export default CartItem;
+// Style
+import styles from "./styles";
+
+const CartItem = ({ item, removeItemFromCart }) => (
+  <ListItem style={styles.listStyle}>
+    <Left>
+      <Text style={styles.drink}>{item.drink}</Text>
+      <Text note style={styles.option}>
+        {item.option}
+      </Text>
+    </Left>
+    <Body>
+      <Text style={styles.quantity}>{item.quantity}</Text>
+    </Body>
+    <Right>
+      <Button transparent onPress={() => removeItemFromCart(item)}>
+        <Icon name="trash" style={styles.removeItem} />
+      </Button>
+    </Right>
+  </ListItem>
+);
+
+const mapDispatchToProps = dispatch => ({
+  removeItemFromCart: item => dispatch(removeItemFromCart(item))
+});
+
+export default connect(null, mapDispatchToProps)(CartItem);
