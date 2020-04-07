@@ -1,11 +1,13 @@
 import React from "react";
-import { List, Content } from "native-base";
+import { List, Content, Spinner } from "native-base";
 import { connect } from "react-redux";
 
 // Component
 import CoffeeItem from "./CoffeeItem";
 
-const CoffeeList = ({ coffeeshops, navigation }) => {
+const CoffeeList = ({ coffeeshops, loading, navigation }) => {
+  if (loading) return <Spinner color="rgb(20,90,100)" />;
+
   const shopList = coffeeshops.map(coffeeshop => (
     <CoffeeItem
       coffeeshop={coffeeshop}
@@ -22,7 +24,8 @@ const CoffeeList = ({ coffeeshops, navigation }) => {
 };
 
 const mapStateToProps = ({ coffeeshops }) => ({
-  coffeeshops
+  coffeeshops,
+  loading: !coffeeshops.length
 });
 
 export default connect(mapStateToProps)(CoffeeList);
