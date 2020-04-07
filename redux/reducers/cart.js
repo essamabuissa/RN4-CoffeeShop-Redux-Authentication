@@ -1,8 +1,6 @@
 import { ADD_ITEM, REMOVE_ITEM, CHECKOUT } from "../actions/types";
 
-const initialState = [];
-
-export default (items = initialState, { type, payload }) => {
+export default (items = [], { type, payload }) => {
   switch (type) {
     case ADD_ITEM:
       const newItem = payload;
