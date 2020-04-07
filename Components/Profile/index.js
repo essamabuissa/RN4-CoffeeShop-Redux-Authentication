@@ -1,22 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View } from "native-base";
-import { connect } from "react-redux";
 
-class Profile extends Component {
-  render() {
-    if (!this.props.user) {
-      this.props.navigation.replace("Login");
-    }
-    return (
-      <View>
-        <Text>PROFILE PAGE</Text>
-      </View>
-    );
-  }
-}
+// Components
+import LogoutButton from "./LogoutButton";
 
-const mapStateToProps = state => ({
-  user: state.authReducer.user
-});
+const Profile = () => (
+  <View>
+    <Text>PROFILE PAGE</Text>
+    <LogoutButton />
+  </View>
+);
 
-export default connect(mapStateToProps)(Profile);
+export default Profile;

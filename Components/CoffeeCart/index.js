@@ -15,7 +15,7 @@ const CoffeeCart = ({ cart, checkoutCart, navigation }) => {
   return (
     <List>
       {cartItems}
-      <Button full danger onPress={() => navigation.navigate("Login")}>
+      <Button full danger onPress={checkoutCart}>
         <Text>Checkout</Text>
       </Button>
     </List>
