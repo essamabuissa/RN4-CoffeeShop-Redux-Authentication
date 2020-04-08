@@ -14,10 +14,16 @@ const CoffeeCart = ({ cart, checkoutCart, navigation }) => {
 
   return (
     <List>
-      {cartItems}
-      <Button full danger onPress={checkoutCart}>
-        <Text>Checkout</Text>
-      </Button>
+      {cartItems.length ? (
+        <>
+          {cartItems}
+          <Button full danger onPress={checkoutCart}>
+            <Text>Checkout</Text>
+          </Button>
+        </>
+      ) : (
+        <Text style={{ textAlign: "center" }}>Buy something</Text>
+      )}
     </List>
   );
 };
