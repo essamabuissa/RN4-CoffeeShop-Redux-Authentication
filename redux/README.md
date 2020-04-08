@@ -44,15 +44,17 @@ Maybe your users would like to log in?
    (**note:** for now the only way you can actually see the profile screen is by making it the `initialRouteName` in the `UserStack`)
 6. Wire up the `LogoutButton` - it should log the user out...
 
-#### 3. Permissions
+#### 3. Permissions and User Flow
 
 In this app, we want to draw users in - give them a chance to explore the app and let them shop without making them login.  
 We only ask them to login when they try to buy something.
 
-1. Only logged in users can checkout. The checkout button in `CoffeeCart` should send the user to the `Login` screen if they're not logged in.
+1. Only logged in users can checkout. The checkout button in `CoffeeCart` should send the user to the `Login` screen if they're not logged in.  
+   (**hint** [`Login` is a screen in a nested navigator](https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator))
 2. Modify your `UserStack`:
    - Logged out users can access `Login` and `Signup` but **not** `Profile`
    - Logged in users can access `Profile` but **not** `Login` or `Signup`
+3. When a user signs up or logs in, don't show them their profile (they already know how they are) - take them to the `CoffeeList`
 
 #### 4. MEGA BONUS - Order History
 
