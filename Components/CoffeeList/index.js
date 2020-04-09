@@ -8,7 +8,7 @@ import CoffeeItem from "./CoffeeItem";
 const CoffeeList = ({ coffeeshops, loading, navigation }) => {
   if (loading) return <Spinner color="rgb(20,90,100)" />;
 
-  const shopList = coffeeshops.map(coffeeshop => (
+  const shopList = coffeeshops.map((coffeeshop) => (
     <CoffeeItem
       coffeeshop={coffeeshop}
       key={coffeeshop.name}
@@ -25,7 +25,7 @@ const CoffeeList = ({ coffeeshops, loading, navigation }) => {
 
 const mapStateToProps = ({ coffeeshops }) => ({
   coffeeshops,
-  loading: !coffeeshops.length
+  loading: !coffeeshops.length,
 });
 
 export default connect(mapStateToProps)(CoffeeList);

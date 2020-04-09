@@ -10,18 +10,30 @@ import Profile from "../../Components/Profile";
 // Config
 import screenOptions from "../screenOptions";
 
+import { connect } from "react-redux";
+
 const { Navigator, Screen } = createStackNavigator();
 
-export default function UserStack() {
-  return (
-    <Navigator initialRouteName={LOGIN} screenOptions={screenOptions}>
-      <Screen name={LOGIN} component={Login} options={{ headerShown: false }} />
-      <Screen
-        name={SIGNUP}
-        component={Signup}
-        options={{ headerShown: false }}
-      />
+const UserStack = ({ user }) => (
+  <Navigator initialRouteName={PROFILE} screenOptions={screenOptions}>
+    {user ? (
       <Screen name={PROFILE} component={Profile} />
-    </Navigator>
-  );
-}
+    ) : (
+      <>
+        <Screen
+          name={LOGIN}
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Screen
+          name={SIGNUP}
+          component={Signup}
+          options={{ headerShown: false }}
+        />
+      </>
+    )}
+  </Navigator>
+);
+
+const mapStateToProps = ({ user }) => ({ user });
+export default connect(mapStateToProps)(UserStack);

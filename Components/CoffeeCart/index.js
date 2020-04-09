@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { Text, List, Button } from "native-base";
 import { connect } from "react-redux";
 
+import { USER, LOGIN } from "../../Navigation/screenNames";
+
 // Component
 import CartItem from "./CartItem";
 
 import { checkoutCart } from "../../redux/actions";
 
-const CoffeeCart = ({ cart, checkoutCart, navigation }) => {
-  const cartItems = cart.map(item => (
+const CoffeeCart = ({ cart, checkoutCart, navigation, user }) => {
+  const cartItems = cart.map((item) => (
     <CartItem item={item} key={item.drink + item.option} />
   ));
 
@@ -17,7 +19,15 @@ const CoffeeCart = ({ cart, checkoutCart, navigation }) => {
       {cartItems.length ? (
         <>
           {cartItems}
-          <Button full danger onPress={checkoutCart}>
+          <Button
+            full
+            danger
+            onPress={
+              user
+                ? checkoutCart
+                : () => navigation.navigate(USER, { screen: LOGIN })
+            }
+          >
             <Text>Checkout</Text>
           </Button>
         </>
@@ -28,12 +38,10 @@ const CoffeeCart = ({ cart, checkoutCart, navigation }) => {
   );
 };
 
-const mapStateToProps = ({ cart }) => ({
-  cart
-});
+const mapStateToProps = ({ cart, user }) => ({ cart, user });
 
-const mapDispatchToProps = dispatch => ({
-  checkoutCart: () => dispatch(checkoutCart())
+const mapDispatchToProps = (dispatch) => ({
+  checkoutCart: () => dispatch(checkoutCart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoffeeCart);
